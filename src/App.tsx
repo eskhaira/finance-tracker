@@ -24,6 +24,7 @@ function App() {
       <ul>
         {transactions.map((transaction) => (
           <Transaction
+            key={transaction.id}
             description={transaction.description}
             amount={transaction.amount}
           />
