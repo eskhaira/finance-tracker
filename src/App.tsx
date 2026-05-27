@@ -1,21 +1,35 @@
-import "./App.css";
+const transactions = [
+  { id: 1, description: "Diesel - Flying J", amount: 142.5 },
+  { id: 2, description: "Coffee - Tim Hortons", amount: 3.25 },
+  { id: 3, description: "Truck wash", amount: 28.0 },
+];
 
-function Greeting({ name, role }: { name: string; role: string }) {
+type TransactionProps = {
+  description: string;
+  amount: number;
+};
+
+function Transaction({ description, amount }: TransactionProps) {
   return (
-    <p>
-      Hello, {name}! Role: {role}
-    </p>
+    <li>
+      {description} - ${amount}
+    </li>
   );
 }
 
 function App() {
   return (
-    <>
-      <h1> Welcome to my finance tracker. </h1>
-      <Greeting name="Ekam" role="owner" />
-      <Greeting name="Friend" role="viewer" />
-      <Greeting name="World" role="guest" />
-    </>
+    <div>
+      <h1>Transactions</h1>
+      <ul>
+        {transactions.map((transaction) => (
+          <Transaction
+            description={transaction.description}
+            amount={transaction.amount}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 
