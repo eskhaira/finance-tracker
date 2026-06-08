@@ -9,10 +9,12 @@ type TransactionProps = {
 
 function Transaction({ id, description, amount, onDelete }: TransactionProps) {
   return (
-    <li>
-      {description} - ${amount}
-      <button onClick={() => onDelete(id)}>Delete</button>
-    </li>
+    <>
+      <li>
+        {description} - ${amount}
+        <button onClick={() => onDelete(id)}>Delete</button>
+      </li>
+    </>
   );
 }
 
@@ -26,6 +28,10 @@ function App() {
   function handleDelete(idToRemove: number) {
     const newTransactions = transactions.filter((t) => t.id !== idToRemove);
     setTransactions(newTransactions);
+  }
+
+  function fullDelete() {
+    setTransactions([]);
   }
   return (
     <div>
@@ -41,6 +47,7 @@ function App() {
           />
         ))}
       </ul>
+      <button onClick={() => fullDelete()}>Clear All</button>
     </div>
   );
 }
