@@ -46,14 +46,9 @@ function App() {
     setDescription("");
     setAmount("");
   }
-
-  function handleSearch() {
-    const newTransaction = transactions.filter(
-      (t) => t.description == searchText,
-    );
-    setTransactions(newTransaction);
-    setSearchText("");
-  }
+  const filteredTransactions = transactions.filter((t) =>
+    t.description.includes(searchText),
+  );
 
   return (
     <div>
@@ -78,10 +73,9 @@ function App() {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <button onClick={() => handleSearch()}>Search</button>
       </p>
       <ul>
-        {transactions.map((transaction) => (
+        {filteredTransactions.map((transaction) => (
           <Transaction
             key={transaction.id}
             id={transaction.id}
