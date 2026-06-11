@@ -36,7 +36,8 @@ function App() {
     setTransactions([]);
   }
 
-  function handleAdd() {
+  function handleAdd(e: React.FormEvent) {
+    e.preventDefault();
     const newTransaction = {
       id: Date.now(),
       description: description,
@@ -53,19 +54,21 @@ function App() {
   return (
     <div>
       <h1>Transactions</h1>
-      <input
-        type="text"
-        placeholder="description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <button onClick={() => handleAdd()}>Add</button>
+      <form onSubmit={handleAdd}>
+        <input
+          type="text"
+          placeholder="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <button>Add</button>
+      </form>
       <p>
         <input
           type="text"
