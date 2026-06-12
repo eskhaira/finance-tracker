@@ -43,6 +43,10 @@ function App() {
       return;
     }
 
+    if (Number(amount) === 0) {
+      return;
+    }
+
     if (description.trim() === "") {
       return;
     }
