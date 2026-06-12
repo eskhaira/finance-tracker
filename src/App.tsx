@@ -36,10 +36,24 @@ function App() {
     setTransactions([]);
   }
 
-  function handleAdd() {
+  function handleAdd(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (Number.isNaN(Number(amount))) {
+      return;
+    }
+
+    if (amount.trim() === "") {
+      return;
+    }
+
+    if (description.trim() === "") {
+      return;
+    }
+
     const newTransaction = {
       id: Date.now(),
-      description: description,
+      description: description.trim(),
       amount: Number(amount),
     };
     setTransactions([...transactions, newTransaction]);
@@ -50,26 +64,31 @@ function App() {
     t.description.includes(searchText),
   );
 
+  const visibleCount = filteredTransactions.length;
+  const totalCount = transactions.length;
+
   return (
     <div>
       <h1>Transactions</h1>
-      <input
-        type="text"
-        placeholder="description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <button onClick={() => handleAdd()}>Add</button>
+      <form onSubmit={handleAdd}>
+        <input
+          type="text"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
       <p>
         <input
           type="text"
-          placeholder="searchText"
+          placeholder="Search Transactions"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
@@ -85,7 +104,10 @@ function App() {
           />
         ))}
       </ul>
-      <button onClick={() => handleClearAll()}>Clear All</button>
+      <p>
+        Showing {visibleCount} of {totalCount}
+      </p>
+      <button onClick={handleClearAll}>Clear All</button>
     </div>
   );
 }
