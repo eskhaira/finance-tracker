@@ -43,7 +43,7 @@ function App() {
       return;
     }
 
-    if (amount === "") {
+    if (amount.trim() === "") {
       return;
     }
 
