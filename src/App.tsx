@@ -64,6 +64,9 @@ function App() {
     t.description.includes(searchText),
   );
 
+  const visibleCount = filteredTransactions.length;
+  const totalCount = transactions.length;
+
   return (
     <div>
       <h1>Transactions</h1>
@@ -101,6 +104,9 @@ function App() {
           />
         ))}
       </ul>
+      <p>
+        Showing {visibleCount} of {totalCount}
+      </p>
       <button onClick={() => handleClearAll()}>Clear All</button>
     </div>
   );
