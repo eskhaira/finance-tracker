@@ -53,7 +53,7 @@ function App() {
 
     const newTransaction = {
       id: Date.now(),
-      description: description,
+      description: description.trim(),
       amount: Number(amount),
     };
     setTransactions([...transactions, newTransaction]);
@@ -73,7 +73,7 @@ function App() {
       <form onSubmit={handleAdd}>
         <input
           type="text"
-          placeholder="description"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -83,12 +83,12 @@ function App() {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <button>Add</button>
+        <button type="submit">Add</button>
       </form>
       <p>
         <input
           type="text"
-          placeholder="searchText"
+          placeholder="Search Transactions"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
@@ -107,7 +107,7 @@ function App() {
       <p>
         Showing {visibleCount} of {totalCount}
       </p>
-      <button onClick={() => handleClearAll()}>Clear All</button>
+      <button onClick={handleClearAll}>Clear All</button>
     </div>
   );
 }
