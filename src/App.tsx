@@ -36,8 +36,17 @@ function App() {
     setTransactions([]);
   }
 
-  function handleAdd(e: React.FormEvent) {
+  function handleAdd(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (Number.isNaN(Number(amount))) {
+      return;
+    }
+
+    if (description.trim() === "") {
+      return;
+    }
+
     const newTransaction = {
       id: Date.now(),
       description: description,
