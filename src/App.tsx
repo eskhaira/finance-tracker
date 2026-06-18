@@ -10,7 +10,7 @@ type TransactionProps = {
 function Transaction({ id, description, amount, onDelete }: TransactionProps) {
   return (
     <li>
-      {description} - ${amount}
+      {description} - ${(amount / 100).toFixed(2)}
       <button onClick={() => onDelete(id)}>Delete</button>
     </li>
   );
@@ -18,9 +18,9 @@ function Transaction({ id, description, amount, onDelete }: TransactionProps) {
 
 function App() {
   const [transactions, setTransactions] = useState([
-    { id: 1, description: "Diesel - Flying J", amount: 142.5 },
-    { id: 2, description: "Coffee - Tim Hortons", amount: 3.25 },
-    { id: 3, description: "Truck wash", amount: 28.0 },
+    { id: 1, description: "Diesel - Flying J", amount: 14250 },
+    { id: 2, description: "Coffee - Tim Hortons", amount: 325 },
+    { id: 3, description: "Truck wash", amount: 2800 },
   ]);
 
   const [description, setDescription] = useState("");
@@ -54,8 +54,11 @@ function App() {
     const newTransaction = {
       id: Date.now(),
       description: description.trim(),
-      amount: Number(amount),
+      amount: Math.round(Number(amount) * 100),
     };
+
+    // console.log(newTransaction.amount); // I just needed to test if amount is being stored as integer cents
+
     setTransactions([...transactions, newTransaction]);
     setDescription("");
     setAmount("");
