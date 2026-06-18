@@ -56,7 +56,9 @@ function App() {
       description: description.trim(),
       amount: Math.round(Number(amount) * 100),
     };
-    console.log(newTransaction.amount);
+
+    // console.log(newTransaction.amount); // I just needed to test if amount is being stored as integer cents
+
     setTransactions([...transactions, newTransaction]);
     setDescription("");
     setAmount("");
