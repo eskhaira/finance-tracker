@@ -5,12 +5,17 @@ type TransactionProps = {
   description: string;
   amount: number;
   onDelete: (id: number) => void;
+  category: string;
 };
+
+function formatCents(cents: number) {
+  return "$" + (cents / 100).toFixed(2);
+}
 
 function Transaction({ id, description, amount, onDelete }: TransactionProps) {
   return (
     <li>
-      {description} - ${(amount / 100).toFixed(2)}
+      {description} - {formatCents(amount)}
       <button onClick={() => onDelete(id)}>Delete</button>
     </li>
   );
@@ -18,9 +23,27 @@ function Transaction({ id, description, amount, onDelete }: TransactionProps) {
 
 function App() {
   const [transactions, setTransactions] = useState([
-    { id: 1, description: "Diesel - Flying J", amount: 14250 },
-    { id: 2, description: "Coffee - Tim Hortons", amount: 325 },
-    { id: 3, description: "Truck wash", amount: 2800 },
+    {
+      id: 1,
+      description: "Diesel - Flying J",
+      amount: 14250,
+      category: "Fuel",
+    },
+    {
+      id: 2,
+      description: "Coffee - Tim Hortons",
+      amount: 325,
+      category: "Food",
+    },
+    { id: 3, description: "Truck wash", amount: 2800, category: "Maintenance" },
+    {
+      id: 4,
+      description: "Diesel - Petro-Canada",
+      amount: 16100,
+      category: "Fuel",
+    },
+    { id: 5, description: "Subway", amount: 1150, category: "Food" },
+    { id: 6, description: "Diesel - Esso", amount: 9800, category: "Fuel" },
   ]);
 
   const [description, setDescription] = useState("");
@@ -55,6 +78,7 @@ function App() {
       id: Date.now(),
       description: description.trim(),
       amount: Math.round(Number(amount) * 100),
+      category: "Uncategorized",
     };
 
     // console.log(newTransaction.amount); // I just needed to test if amount is being stored as integer cents
@@ -69,6 +93,10 @@ function App() {
 
   const visibleCount = filteredTransactions.length;
   const totalCount = transactions.length;
+  const total = transactions.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.amount,
+    0,
+  );
 
   return (
     <div>
@@ -104,12 +132,14 @@ function App() {
             description={transaction.description}
             amount={transaction.amount}
             onDelete={handleDelete}
+            category={transaction.category}
           />
         ))}
       </ul>
       <p>
         Showing {visibleCount} of {totalCount}
       </p>
+      <p>Total amount = {formatCents(total)}</p>
       <button onClick={handleClearAll}>Clear All</button>
     </div>
   );
