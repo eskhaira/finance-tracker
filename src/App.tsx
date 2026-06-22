@@ -1,25 +1,6 @@
 import { useState } from "react";
-
-type TransactionProps = {
-  id: number;
-  description: string;
-  amount: number;
-  onDelete: (id: number) => void;
-  category: string;
-};
-
-function formatCents(cents: number) {
-  return "$" + (cents / 100).toFixed(2);
-}
-
-function Transaction({ id, description, amount, onDelete }: TransactionProps) {
-  return (
-    <li>
-      {description} - {formatCents(amount)}
-      <button onClick={() => onDelete(id)}>Delete</button>
-    </li>
-  );
-}
+import formatCents from "./formatCents";
+import Transaction from "./transaction";
 
 function App() {
   const [transactions, setTransactions] = useState([
